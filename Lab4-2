@@ -1,0 +1,103 @@
+public abstract class Aircraft {
+    private String model;
+    private int capacity;
+    private double cargoCapacity;
+    private int range;
+
+
+    public Aircraft(String model, int capacity, double cargoCapacity, int range) {
+        this.model = model;
+        this.capacity = capacity;
+        this.cargoCapacity = cargoCapacity;
+        this.range = range;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public double getCargoCapacity() {
+        return cargoCapacity;
+    }
+
+    public void setCargoCapacity(double cargoCapacity) {
+        this.cargoCapacity = cargoCapacity;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public void setRange(int range) {
+        this.range = range;
+    }
+
+    public String toString() {
+        return "Aircraft{" +
+                "model='" + model + '\'' +
+                ", capacity=" + capacity +
+                ", cargoCapacity=" + cargoCapacity +
+                ", range=" + range +
+                '}';
+    }
+}
+
+public class PassengerAircraft extends Aircraft {
+    private int numberOfPassengers;
+
+
+    public PassengerAircraft(String model, int capacity, double cargoCapacity, int range, int numberOfPassengers) {
+        super(model, capacity, cargoCapacity, range);
+        this.numberOfPassengers = numberOfPassengers;
+    }
+
+    public int getNumberOfPassengers() {
+        return numberOfPassengers;
+    }
+
+    public void setNumberOfPassengers(int numberOfPassengers) {
+        this.numberOfPassengers = numberOfPassengers;
+    }
+
+    public String toString() {
+        return "PassengerAircraft{" +
+                "numberOfPassengers=" + numberOfPassengers +
+                "} " + super.toString();
+    }
+}
+
+public class CargoAircraft extends Aircraft {
+    private String cargoType;
+
+
+    public CargoAircraft(String model, int capacity, double cargoCapacity, int range, String cargoType) {
+        super(model, capacity, cargoCapacity, range);
+        this.cargoType = cargoType;
+    }
+
+    public String getCargoType() {
+        return cargoType;
+    }
+
+    public void setCargoType(String cargoType) {
+        this.cargoType = cargoType;
+    }
+
+    public String toString() {
+        return "CargoAircraft{" +
+                "cargoType='" + cargoType + '\'' +
+                "} " + super.toString();
+    }
+}
