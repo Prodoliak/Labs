@@ -1,0 +1,79 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Airline {
+    private List<Aircraft> aircraftList;
+
+    public Airline(List<Aircraft> aircraftList) {
+        this.aircraftList = aircraftList;
+    }
+
+    public int getTotalCapacity() {
+        return aircraftList.stream().mapToInt(Aircraft::getCapacity).sum();
+    }
+
+    public double getTotalCargoCapacity() {
+        return aircraftList.stream().mapToDouble(Aircraft::getCargoCapacity).sum();
+    }
+
+    public void sortAircraftByRange() {
+        Collections.sort(aircraftList, (a1, a2) -> Integer.compare(a1.getRange(), a2.getRange()));
+    }
+
+    public List<Aircraft> findAircraftByFuelConsumptionRange(double minFuelConsumption, double maxFuelConsumption) {
+        List<Aircraft> result = new ArrayList<>();
+        for (Aircraft aircraft : aircraftList) {
+            double fuelConsumption = calculateFuelConsumption(aircraft);
+            if (fuelConsumption >= minFuelConsumption && fuelConsumption <= maxFuelConsumption) {
+                result.add(aircraft);
+            }
+        }
+        return result;
+    }
+
+    private double calculateFuelConsumption(Aircraft aircraft) {
+        return aircraft.getCapacity() + aircraft.getCargoCapacity();
+    }
+
+    public List<Aircraft> getAircraftList() {
+        return aircraftList;
+    }
+
+    public void setAircraftList(List<Aircraft> aircraftList) {
+        this.aircraftList = aircraftList;
+    }
+}
+
+public class AirlineApplication {
+    public static void main(String[] args) {
+        Aircraft passengerAircraft1 = new PassengerAircraft("Boeing 747", 500, 200.0, 8000, 300);
+        Aircraft cargoAircraft1 = new CargoAircraft("Airbus A300", 200, 500.0, 6000, "Freight");
+        Aircraft passengerAircraft2 = new PassengerAircraft("Airbus A320", 150, 100.0, 5000, 200);
+
+        List<Aircraft> aircraftList = new ArrayList<>();
+        aircraftList.add(passengerAircraft1);
+        aircraftList.add(cargoAircraft1);
+        aircraftList.add(passengerAircraft2);
+
+        Airline airline = new Airline(aircraftList);
+
+        int totalCapacity = airline.getTotalCapacity();
+        double totalCargoCapacity = airline.getTotalCargoCapacity();
+
+        System.out.println("Total Capacity: " + totalCapacity);
+        System.out.println("Total Cargo Capacity: " + totalCargoCapacity);
+
+        airline.sortAircraftByRange();
+
+        System.out.println("\nSorted Aircraft List:");
+        for (Aircraft aircraft : airline.getAircraftList()) {
+            System.out.println(aircraft);
+        }
+
+        double minFuelConsumption = 200.0;
+        double maxFuelConsumption = 400.0;
+
+        List<Aircraft> filteredAircraft = airline.findAircraftByFuelConsumptionRange(minFuelConsumption, maxFuelConsumption);
+
+        System.out.println
