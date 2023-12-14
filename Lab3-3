@@ -1,0 +1,64 @@
+import java.util.Arrays;
+
+public class Triangle {
+    private Point vertex1;
+    private Point vertex2;
+    private Point vertex3;
+
+    public Triangle(Point vertex1, Point vertex2, Point vertex3) {
+        this.vertex1 = vertex1;
+        this.vertex2 = vertex2;
+        this.vertex3 = vertex3;
+    }
+
+    public double calculateArea() {
+        double side1 = vertex1.calculateDistance(vertex2);
+        double side2 = vertex2.calculateDistance(vertex3);
+        double side3 = vertex3.calculateDistance(vertex1);
+
+        double s = calculatePerimeter() / 2;
+        return Math.sqrt(s * (s - side1) * (s - side2) * (s - side3));
+    }
+
+    public double calculatePerimeter() {
+        return vertex1.calculateDistance(vertex2) + vertex2.calculateDistance(vertex3) +
+               vertex3.calculateDistance(vertex1);
+    }
+
+    public String determineType() {
+        double side1 = vertex1.calculateDistance(vertex2);
+        double side2 = vertex2.calculateDistance(vertex3);
+        double side3 = vertex3.calculateDistance(vertex1);
+
+        if (side1 == side2 && side2 == side3) {
+            return "Equilateral";
+        } else if (side1 == side2 || side2 == side3 || side3 == side1) {
+            return "Isosceles";
+        } else if (isRightAngled(side1, side2, side3) || isRightAngled(side2, side3, side1) || isRightAngled(side3, side1, side2)) {
+            return "Right-angled";
+        } else {
+            return "Scalene";
+        }
+    }
+
+    private boolean isRightAngled(double side1, double side2, double hypotenuse) {
+        return Math.pow(side1, 2) + Math.pow(side2, 2) == Math.pow(hypotenuse, 2);
+    }
+
+
+    public String toString() {
+        return "Triangle{" +
+                "vertex1=" + vertex1 +
+                ", vertex2=" + vertex2 +
+                ", vertex3=" + vertex3 +
+                '}';
+    }
+
+    public static Triangle[] createTriangleArray() {
+        Triangle[] triangles = new Triangle[3];
+        triangles[0] = new Triangle(new Point(0, 0), new Point(4, 0), new Point(0, 3));
+        triangles[1] = new Triangle(new Point(1, 1), new Point(5, 1), new Point(3, 4));
+        triangles[2] = new Triangle(new Point(2, 3), new Point(7, 3), new Point(5, 7));
+        return triangles;
+    }
+}
