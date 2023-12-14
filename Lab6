@@ -1,0 +1,62 @@
+public interface Technology {
+    void powerOn();
+
+    void powerOff();
+
+    void performFunction();
+}
+
+public abstract class Player implements Technology {
+    private String model;
+
+
+    public Player(String model) {
+        this.model = model;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void powerOn() {
+        System.out.println(model + " powered on.");
+    }
+
+    public void powerOff() {
+        System.out.println(model + " powered off.");
+    }
+
+    public abstract void play();
+}
+
+public class VideoPlayer extends Player {
+    private String supportedFormats;
+
+    public VideoPlayer(String model, String supportedFormats) {
+        super(model);
+        this.supportedFormats = supportedFormats;
+    }
+
+    public String getSupportedFormats() {
+        return supportedFormats;
+    }
+
+    public void setSupportedFormats(String supportedFormats) {
+        this.supportedFormats = supportedFormats;
+    }
+
+    public void play() {
+        System.out.println("Playing video in formats: " + supportedFormats);
+    }
+
+    public static void main(String[] args) {
+        VideoPlayer videoPlayer = new VideoPlayer("Sony", "MP4, AVI, MKV");
+        videoPlayer.powerOn();
+        videoPlayer.play();
+        videoPlayer.powerOff();
+    }
+}
