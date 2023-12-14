@@ -1,0 +1,45 @@
+import java.util.*;
+
+public class MinDifferentDigits {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the number of numbers (n): ");
+        int n = scanner.nextInt();
+
+        System.out.println("Enter the numbers:");
+        int[] numbers = new int[n];
+        for (int i = 0; i < n; i++) {
+            numbers[i] = scanner.nextInt();
+        }
+
+        int result = findNumberWithMinDifferentDigits(numbers);
+        System.out.println("A number with the minimum number of different digits: " + result);
+    }
+
+    private static int findNumberWithMinDifferentDigits(int[] numbers) {
+        int minDifferentDigits = Integer.MAX_VALUE;
+        int result = 0;
+
+        for (int number : numbers) {
+            int differentDigits = countDifferentDigits(number);
+            if (differentDigits < minDifferentDigits) {
+                minDifferentDigits = differentDigits;
+                result = number;
+            }
+        }
+
+        return result;
+    }
+
+    private static int countDifferentDigits(int number) {
+        Set<Character> digitSet = new HashSet<>();
+        char[] digits = String.valueOf(number).toCharArray();
+
+        for (char digit : digits) {
+            digitSet.add(digit);
+        }
+
+        return digitSet.size();
+    }
+}
