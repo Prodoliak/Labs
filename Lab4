@@ -1,0 +1,152 @@
+import java.util.Objects;
+
+class Wheel {
+    private String brand;
+
+    public Wheel(String brand) {
+        this.brand = brand;
+    }
+
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Wheel wheel = (Wheel) o;
+        return Objects.equals(brand, wheel.brand);
+    }
+
+    public int hashCode() {
+        return Objects.hash(brand);
+    }
+
+    public String toString() {
+        return "Wheel{" +
+                "brand='" + brand + '\'' +
+                '}';
+    }
+}
+
+class Engine {
+    private String type;
+
+    public Engine(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Engine engine = (Engine) o;
+        return Objects.equals(type, engine.type);
+    }
+
+    public int hashCode() {
+        return Objects.hash(type);
+    }
+
+    public String toString() {
+        return "Engine{" +
+                "type='" + type + '\'' +
+                '}';
+    }
+}
+
+class Car {
+    private String brand;
+    private Wheel wheel;
+    private Engine engine;
+
+    public Car(String brand, Wheel wheel, Engine engine) {
+        this.brand = brand;
+        this.wheel = wheel;
+        this.engine = engine;
+    }
+
+    public void drive() {
+        System.out.println("The car is moving.");
+    }
+
+    public void refuel() {
+        System.out.println("The car is refueling.");
+    }
+
+    public void changeWheel() {
+        System.out.println("Changing the wheel.");
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public Wheel getWheel() {
+        return wheel;
+    }
+
+    public void setWheel(Wheel wheel) {
+        this.wheel = wheel;
+    }
+
+    public Engine getEngine() {
+        return engine;
+    }
+
+    public void setEngine(Engine engine) {
+        this.engine = engine;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return Objects.equals(brand, car.brand) &&
+                Objects.equals(wheel, car.wheel) &&
+                Objects.equals(engine, car.engine);
+    }
+
+    public int hashCode() {
+        return Objects.hash(brand, wheel, engine);
+    }
+
+    public String toString() {
+        return "Car{" +
+                "brand='" + brand + '\'' +
+                ", wheel=" + wheel +
+                ", engine=" + engine +
+                '}';
+    }
+}
+
+public class CarApplication {
+    public static void main(String[] args) {
+        Wheel wheel = new Wheel("Michelin");
+        Engine engine = new Engine("V6");
+        Car car = new Car("Toyota", wheel, engine);
+
+        car.drive();
+        car.refuel();
+        car.changeWheel();
+
+        System.out.println("\nCar Details:");
+        System.out.println(car);
+    }
+}
