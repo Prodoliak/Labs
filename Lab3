@@ -1,0 +1,153 @@
+import java.util.Arrays;
+
+class Train {
+    private String destination;
+    private int trainNumber;
+    private String departureTime;
+    private int commonSeats;
+    private int coupeSeats;
+    private int reservedSeats;
+    private int luxurySeats;
+
+    public Train(String destination, int trainNumber, String departureTime, int commonSeats, int coupeSeats, int reservedSeats, int luxurySeats) {
+        this.destination = destination;
+        this.trainNumber = trainNumber;
+        this.departureTime = departureTime;
+        this.commonSeats = commonSeats;
+        this.coupeSeats = coupeSeats;
+        this.reservedSeats = reservedSeats;
+        this.luxurySeats = luxurySeats;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public int getTrainNumber() {
+        return trainNumber;
+    }
+
+    public void setTrainNumber(int trainNumber) {
+        this.trainNumber = trainNumber;
+    }
+
+    public String getDepartureTime() {
+        return departureTime;
+    }
+
+    public void setDepartureTime(String departureTime) {
+        this.departureTime = departureTime;
+    }
+
+    public int getCommonSeats() {
+        return commonSeats;
+    }
+
+    public void setCommonSeats(int commonSeats) {
+        this.commonSeats = commonSeats;
+    }
+
+    public int getCoupeSeats() {
+        return coupeSeats;
+    }
+
+    public void setCoupeSeats(int coupeSeats) {
+        this.coupeSeats = coupeSeats;
+    }
+
+    public int getReservedSeats() {
+        return reservedSeats;
+    }
+
+    public void setReservedSeats(int reservedSeats) {
+        this.reservedSeats = reservedSeats;
+    }
+
+    public int getLuxurySeats() {
+        return luxurySeats;
+    }
+
+    public void setLuxurySeats(int luxurySeats) {
+        this.luxurySeats = luxurySeats;
+    }
+
+    public String toString() {
+        return "Train{" +
+                "destination='" + destination + '\'' +
+                ", trainNumber=" + trainNumber +
+                ", departureTime='" + departureTime + '\'' +
+                ", commonSeats=" + commonSeats +
+                ", coupeSeats=" + coupeSeats +
+                ", reservedSeats=" + reservedSeats +
+                ", luxurySeats=" + luxurySeats +
+                '}';
+    }
+
+    public static Train[] createTrainArray() {
+        Train[] trains = new Train[3];
+        trains[0] = new Train("Kyiv", 101, "08:00", 50, 20, 30, 10);
+        trains[1] = new Train("Lviv", 202, "12:30", 40, 15, 25, 5);
+        trains[2] = new Train("Odessa", 303, "15:45", 60, 25, 35, 15);
+        return trains;
+    }
+}
+
+public class TrainManagement {
+    public static void main(String[] args) {
+        Train[] trains = Train.createTrainArray();
+
+        System.out.println("Trains going to Lviv:");
+        printTrains(filterByDestination(trains, "Lviv"));
+
+        System.out.println("\nTrains going to Kyiv, departing after 12:00:");
+        printTrains(filterByDestinationAndDepartureTime(trains, "Kyiv", "12:00"));
+
+        System.out.println("\nTrains going to Odessa with common seats:");
+        printTrains(filterByDestinationAndSeatType(trains, "Odessa", "common"));
+    }
+
+    private static void printTrains(Train[] filteredTrains) {
+        for (Train train : filteredTrains) {
+            System.out.println(train);
+        }
+    }
+
+    private static Train[] filterByDestination(Train[] trains, String destination) {
+        return Arrays.stream(trains)
+                .filter(train -> train.getDestination().equalsIgnoreCase(destination))
+                .toArray(Train[]::new);
+    }
+
+    private static Train[] filterByDestinationAndDepartureTime(Train[] trains, String destination, String departureTime) {
+        return Arrays.stream(trains)
+                .filter(train -> train.getDestination().equalsIgnoreCase(destination) &&
+                        train.getDepartureTime().compareTo(departureTime) > 0)
+                .toArray(Train[]::new);
+    }
+
+    private static Train[] filterByDestinationAndSeatType(Train[] trains, String destination, String seatType) {
+        return Arrays.stream(trains)
+                .filter(train -> train.getDestination().equalsIgnoreCase(destination) &&
+                        getSeatCountByType(train, seatType) > 0)
+                .toArray(Train[]::new);
+    }
+
+    private static int getSeatCountByType(Train train, String seatType) {
+        switch (seatType.toLowerCase()) {
+            case "common":
+                return train.getCommonSeats();
+            case "coupe":
+                return train.getCoupeSeats();
+            case "reserved":
+                return train.getReservedSeats();
+            case "luxury":
+                return train.getLuxurySeats();
+            default:
+                return 0;
+        }
+    }
+}
